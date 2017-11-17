@@ -82,7 +82,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXr-BV-Q40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-44" y="-179.46026986506749"/>
+            <point key="canvasLocation" x="553" y="-173"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8ch-qY-QS5">
+            <objects>
+                <viewController id="vOC-kn-U1m" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ISl-ke-Gdx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CrS-O6-umU">
+                                <rect key="frame" x="124" y="146" width="158" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <state key="normal" title="OnLine"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZs-CF-8tJ">
+                                <rect key="frame" x="124" y="377" width="158" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <state key="normal" title="OffLine"/>
+                                <connections>
+                                    <segue destination="eNP-EF-utj" kind="push" id="Dog-3e-rpE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="JKw-48-1Od"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0d1-Uv-9nr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dEF-B3-v4x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-570" y="-173"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5fN-2D-Raw">
@@ -95,12 +130,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="eNP-EF-utj" kind="relationship" relationship="rootViewController" id="niS-m3-79a"/>
+                        <segue destination="vOC-kn-U1m" kind="relationship" relationship="rootViewController" id="UHS-Mt-MfY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wvX-rl-TKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-825" y="-179"/>
+            <point key="canvasLocation" x="-1374" y="-173"/>
         </scene>
     </scenes>
 </document>

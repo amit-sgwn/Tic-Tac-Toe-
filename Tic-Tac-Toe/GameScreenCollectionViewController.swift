@@ -40,6 +40,21 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         return IndexPath(row: move.position.row*3 + move.position.column, section: 0)
     }
     
+    private func showGameCompleteAlert(withTitle title: String)
+    {
+        let alert = UIAlertController(title: title, message: "Game completed, you can start again or go back", preferredStyle: .alert)
+        let goBackAction = UIAlertAction(title: "Go back", style: .cancel, handler: { (_) in
+            self.navigationController?.popViewController(animated: true)
+        })
+        let restartAction = UIAlertAction(title: "Restart", style: .default, handler: { (_) in
+            self.restartGame()
+        })
+        
+        alert.addAction(goBackAction)
+        alert.addAction(restartAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     private func restartGame()
     {
         game = Game()
@@ -70,17 +85,11 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
             gameGridView.reloadItems(at: [indexPath])
             if let winningSign = game.state.getWinner()
             {
-                let alert = UIAlertController(title: "\(winningSign) won!", message: "Game completed, you can start again or go back", preferredStyle: .alert)
-                let goBackAction = UIAlertAction(title: "Go back", style: .cancel, handler: { (_) in
-                    self.dismiss(animated: true, completion: nil)
-                })
-                let restartAction = UIAlertAction(title: "Restart", style: .default, handler: { (_) in
-                    self.restartGame()
-                })
-                
-                alert.addAction(goBackAction)
-                alert.addAction(restartAction)
-                present(alert, animated: true, completion: nil)
+                showGameCompleteAlert(withTitle: "\(winningSign) won!")
+            }
+            else if game.state.isDraw()
+            {
+                showGameCompleteAlert(withTitle: "Match draw")
             }
         }
         else

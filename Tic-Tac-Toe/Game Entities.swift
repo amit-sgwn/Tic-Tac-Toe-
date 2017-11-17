@@ -42,13 +42,13 @@ struct GameState: CustomStringConvertible
             fatalError("Row/Coumn already filled")
         }
         
-        state[move.position.row][move.position.column] = move.sign
+        state[move.position.row][move.position.column] = nil
         nextTurn.toggle()
     }
     
     var isComplete: Bool
     {
-        return getWinner() != nil
+        return getWinner() != nil || isDraw()
     }
     
     func getWinner() -> Sign?
@@ -77,6 +77,12 @@ struct GameState: CustomStringConvertible
         {
             return nil
         }
+    }
+    
+    func isDraw() ->Bool
+    {
+        let isAnyCellEmpty = state.flatMap({$0}).flatMap({$0}).count != 9
+        return !isAnyCellEmpty && getWinner() == nil
     }
     
     var description: String
