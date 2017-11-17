@@ -8,7 +8,26 @@
 
 import UIKit
 
-class GameButtonCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
+class GameButtonCell: UICollectionViewCell
+{
+    @IBOutlet private weak var imageView: UIImageView!
     
+    func display(_ sign: Sign?)
+    {
+        if let sign = sign
+        {
+            if sign == .cross
+            {
+                imageView.image = #imageLiteral(resourceName: "image_x")
+            }
+            else
+            {
+                imageView.image = #imageLiteral(resourceName: "image_o")
+            }
+        }
+        else
+        {
+            imageView.image = nil
+        }
+    }
 }

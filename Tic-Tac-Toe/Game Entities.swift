@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GameState
+struct GameState: CustomStringConvertible
 {
     private var state : [[Sign?]]
     private(set) var nextTurn: Sign
@@ -46,36 +46,57 @@ struct GameState
         nextTurn.toggle()
     }
     
-    func isComplete() -> Bool
+    var isComplete: Bool
+    {
+        return getWinner() != nil
+    }
+    
+    func getWinner() -> Sign?
     {
         for i in 0..<3
         {
             if state[i][0] == state[i][1], state[i][0] == state[i][2]
             {
-                return true
+                return state[i][0]
             }
             else if state[0][i] == state[1][i], state[0][i] == state[2][i]
             {
-                return true
+                return state[0][i]
             }
         }
         
         if state[0][0] == state[1][1], state[1][1] == state[2][2]
         {
-            return true
+            return state[0][0]
         }
         else if state[0][2] == state[1][1], state[1][1] == state[2][0]
         {
-            return true
+            return state[0][2]
         }
         else
         {
-            return false
+            return nil
         }
+    }
+    
+    var description: String
+    {
+        var s = ""
+        
+        for row in 0..<3
+        {
+            for column in 0..<3
+            {
+                s += state[row][column]?.description ?? " "
+                s += ", "
+            }
+            s += "\n"
+        }
+        return s
     }
 }
 
-enum Sign
+enum Sign: CustomStringConvertible
 {
     case circle, cross
     
@@ -88,6 +109,18 @@ enum Sign
         else
         {
             self = .circle
+        }
+    }
+    
+    var description: String
+    {
+        if self == .circle
+        {
+            return "Circle"
+        }
+        else
+        {
+            return "Cross"
         }
     }
 }

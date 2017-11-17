@@ -11,25 +11,23 @@ import Foundation
 class Game
 {
     let id: UUID
-    var state: GameState
+    let size = 3*3
+    private(set) var state: GameState
     var history: [Move] = []
     
-    let player1: Player
-    let player2: Player
-    
-    init(id: UUID = UUID(), p1: Player, p2: Player)
+    init(id: UUID = UUID())
     {
         self.id = id
         state = GameState()
-        player1 = p1
-        player2 = p2
     }
     
-    func makeMoveOn(row: Int, column: Int) -> Move
+    @discardableResult
+    func makeMoveOn(row: Int, column: Int) -> Move?
     {
-        guard row <= 2, column <= 2 else
+        guard row <= 2, column <= 2, state[row, column] == nil else
         {
-            fatalError("Invalid position received")
+            print("Invalid position received")
+            return nil
         }
         
         let move = Move(sign: state.nextTurn, position: (row, column))
