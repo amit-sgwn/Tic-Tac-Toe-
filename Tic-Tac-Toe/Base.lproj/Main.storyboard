@@ -84,10 +84,10 @@
             </objects>
             <point key="canvasLocation" x="553" y="-173"/>
         </scene>
-        <!--View Controller-->
+        <!--Splash Screen View Controller-->
         <scene sceneID="8ch-qY-QS5">
             <objects>
-                <viewController id="vOC-kn-U1m" sceneMemberID="viewController">
+                <viewController id="vOC-kn-U1m" customClass="SplashScreenViewController" customModule="Tic_Tac_Toe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ISl-ke-Gdx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,7 +103,7 @@
                                             <color key="titleColor" red="0.28655593554453507" green="0.29003410532994922" blue="0.2822925007826253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="online:" destination="yeJ-1q-eWI" eventType="touchUpInside" id="XLI-dO-Yox"/>
+                                            <action selector="online:" destination="vOC-kn-U1m" eventType="touchUpInside" id="eQu-4P-Qfq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZs-CF-8tJ">
@@ -130,7 +130,6 @@
                     <navigationItem key="navigationItem" id="0d1-Uv-9nr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dEF-B3-v4x" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="yeJ-1q-eWI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-570" y="-173"/>
         </scene>
