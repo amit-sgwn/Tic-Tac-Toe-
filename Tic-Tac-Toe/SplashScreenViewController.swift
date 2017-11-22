@@ -11,14 +11,46 @@ import AFNetworking
 import Firebase
 import FirebaseDatabase
 
-class SplashScreenViewController: UIViewController {
+class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     
+    @IBOutlet weak var nameField: UITextField!
     let baseURL = URL(string: "https://fcm.googleapis.com")!
     
     // MARK : Declairing database variables
     var ref: DatabaseReference!
     var rootRef: DatabaseReference!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.nameField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        self.view.endEditing(true)
+        return false
+    }
+    func dismissKeyboard() {
+        
+        view.endEditing(true)
+    }
+
+    @IBAction func submitAction(_ sender: UIButton) {
+        var playerName = nameField.text
+        let token = Messaging.messaging().fcmToken
+        
+        ref = Database.database().reference(withPath : "Games")
+        let gameId = ref.child("GameId")
+        let fcmTocken = ref.child("fcmtoken")
+        let player = ref.child("player")
+        let playerid = player.child("playerId")
+        let playername = player.child("name")
+        var newplayer = Player(playerName!,.circle)
+        gameId.setValue("1")
+        fcmTocken.setValue(token)
+        playerid.setValue(newplayer.id)
+        playername.setValue(newplayer.name)
+        //print(rootRef.key)
+    }
     func postReqest()
     {
          let manager = AFHTTPSessionManager(baseURL: baseURL)
@@ -42,25 +74,25 @@ class SplashScreenViewController: UIViewController {
         }
     }
     
-    func getRawPlayer(){
-        var player = Player("Amit",.circle)
-    }
+
     @IBAction func online(_ sender: UIButton) {
        postReqest()
-        rootRef = Database.database().reference()
-        ref = Database.database().reference(withPath : "Games")
-        let gameId = ref.child("GameId")
-        let fcmTocken = ref.child("fcmtoken")
-        let player = ref.child("player")
-        var playerid = player.child("playerId")
-        var playername = player.child("name")
-        gameId.setValue("1")
-        fcmTocken.setValue("jdkjskjfhjkdfhkdhkfjhkhjfhkd")
-        playerid.setValue("jskjf")
-        playername.setValue("Amit")
-        //print(rootRef.key)
-       // self.ref.child("player").child(user.uid).setValue(["username": username])
-        print(ref.key)
+//        let token = Messaging.messaging().fcmToken
+//        print("firebase token ",token)
+//        rootRef = Database.database().reference()
+//        ref = Database.database().reference(withPath : "Games")
+//        let gameId = ref.child("GameId")
+//        let fcmTocken = ref.child("fcmtoken")
+//        let player = ref.child("player")
+//        let playerid = player.child("playerId")
+//        let playername = player.child("name")
+//        gameId.setValue("1")
+//        fcmTocken.setValue("jdkjskjfhjkdfhkdhkfjhkhjfhkd")
+//        playerid.setValue("jskjf")
+//        playername.setValue("Amit")
+//        //print(rootRef.key)
+//       // self.ref.child("player").child(user.uid).setValue(["username": username])
+//        print(ref.key)
     }
     
 }

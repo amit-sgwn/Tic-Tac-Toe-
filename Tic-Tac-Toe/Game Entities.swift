@@ -133,7 +133,7 @@ enum Sign: CustomStringConvertible
 
 class Player
 {
-    let id: UUID? = nil
+    let id: NSUUID? = nil
     let name : String
     let sign: Sign
     
