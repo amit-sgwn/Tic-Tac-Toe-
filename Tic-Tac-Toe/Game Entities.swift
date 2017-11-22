@@ -141,6 +141,7 @@ class Player
     {
         self.name = name
         self.sign = sign
+
     }
 }
 

@@ -19,10 +19,19 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     // MARK : Declairing database variables
     var ref: DatabaseReference!
     var rootRef: DatabaseReference!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let token = Messaging.messaging().fcmToken
         self.nameField.delegate = self
+        ref = Database.database().reference(withPath : "Games")
+        ref.observe(.value, with: { snapshot in
+            print("key is ",snapshot.key)
+            print(snapshot.value)
+            for item in snapshot.children {
+                print("key is ",(item as! DataSnapshot).key)
+                print((item as! DataSnapshot).value)
+            }
+        })
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
@@ -44,11 +53,13 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         let player = ref.child("player")
         let playerid = player.child("playerId")
         let playername = player.child("name")
+        let playersign = player.child("Sign")
         var newplayer = Player(playerName!,.circle)
         gameId.setValue("1")
         fcmTocken.setValue(token)
         playerid.setValue(newplayer.id)
         playername.setValue(newplayer.name)
+        playersign.setValue(String(describing: newplayer.sign))
         //print(rootRef.key)
     }
     func postReqest()
