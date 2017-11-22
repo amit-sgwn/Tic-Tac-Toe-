@@ -8,10 +8,16 @@
 
 import UIKit
 import AFNetworking
+import Firebase
+import FirebaseDatabase
 
 class SplashScreenViewController: UIViewController {
     
     let baseURL = URL(string: "https://fcm.googleapis.com")!
+    
+    // MARK : Declairing database variables
+    var ref: DatabaseReference!
+    var rootRef: DatabaseReference!
     
     func postReqest()
     {
@@ -36,7 +42,25 @@ class SplashScreenViewController: UIViewController {
         }
     }
     
+    func getRawPlayer(){
+        var player = Player("Amit",.circle)
+    }
     @IBAction func online(_ sender: UIButton) {
        postReqest()
+        rootRef = Database.database().reference()
+        ref = Database.database().reference(withPath : "Games")
+        let gameId = ref.child("GameId")
+        let fcmTocken = ref.child("fcmtoken")
+        let player = ref.child("player")
+        var playerid = player.child("playerId")
+        var playername = player.child("name")
+        gameId.setValue("1")
+        fcmTocken.setValue("jdkjskjfhjkdfhkdhkfjhkhjfhkd")
+        playerid.setValue("jskjf")
+        playername.setValue("Amit")
+        //print(rootRef.key)
+       // self.ref.child("player").child(user.uid).setValue(["username": username])
+        print(ref.key)
     }
+    
 }

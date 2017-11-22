@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
+
 
 class GameListTableViewController: UITableViewController {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     override func didReceiveMemoryWarning() {

@@ -15,7 +15,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     var window: UIWindow?
-    var gcmMessageIDKey = "gcm.message_id"
+   // var gcmMessageIDKey = "gcm.message_id"
     var notificationDelegate = NotificationDelegate()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -57,12 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // Messaging.messaging().appDidReceiveMessage(userInfo)
         
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
+      //  if let messageID = userInfo[gcmMessageIDKey] {
+        //    print("Message ID: \(messageID)")
+        //}
         
         // Print full message.
-        print(userInfo)
+      //  print(userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -75,12 +75,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // Messaging.messaging().appDidReceiveMessage(userInfo)
         
         // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
+    //    if let messageID = userInfo[gcmMessageIDKey] {
+    //        print("Message ID: \(messageID)")
+    //    }
         
         // Print full message.
-        print(userInfo)
+    //    print(userInfo)
         
         completionHandler(UIBackgroundFetchResult.newData)
     }
