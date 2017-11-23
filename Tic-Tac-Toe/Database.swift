@@ -14,17 +14,19 @@ import AFNetworking
 class ServerData {
     
     //MARK: Properties
-    var ref: DatabaseReference!
-    var rootRef: DatabaseReference!
+    var rootRef: DatabaseReference
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
+    
+    //MARK : Constructor
+    init(){
+        self.rootRef = Database.database().reference()
+    }
+    
     
     //MARK: Action
     private func registerUser(Name name : String){
         let token = Messaging.messaging().fcmToken
-        rootRef = Database.database().reference()
-        ref = Database.database().reference(withPath : "Games")
-        
         
         // MARK : Accessing json child
         let gameName = rootRef.child("Games\(token!)")

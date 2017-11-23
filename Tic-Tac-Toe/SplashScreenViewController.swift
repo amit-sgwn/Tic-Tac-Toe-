@@ -22,6 +22,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     var isthere = false
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
+    var serverData : ServerData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,8 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         let token = Messaging.messaging().fcmToken
         self.nameField.delegate = self
+        
+        serverData = getServerData()
         
         ref = Database.database().reference()
         ref.observe(.value, with: { snapshot in
@@ -54,6 +57,11 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
             }
         })
         
+    }
+    
+    
+    func getServerData() -> ServerData{
+        return ServerData()
     }
     
     
