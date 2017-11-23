@@ -21,6 +21,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     var rootRef: DatabaseReference!
     var isthere = false
     var otherDevicesTokens : [String?] = []
+    var otherPlayer : [Player?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +33,13 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         ref = Database.database().reference()
         ref.observe(.value, with: { snapshot in
             print("key is ",snapshot.key)
-            print("value is ",snapshot.value)
+            print("value is ",snapshot.value!)
             let value = snapshot.value as? NSDictionary
             let fcm = value?["fcmtoken"] as? String ?? ""
             print("fcm is ",fcm)
             for item in snapshot.children {
                 print("key is ",(item as! DataSnapshot).key)
-                print("value is ",(item as! DataSnapshot).value)
+                print("value is ",(item as! DataSnapshot).value!)
                 let valu = (item as! DataSnapshot).value as? NSDictionary
                 if let fcm = valu?["fcmtoken"] {
                     print(fcm)
@@ -47,7 +48,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
                     }
                 }
                 self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
-                
+                self.otherPlayer.append(valu?["player"] as? Player)
              //   print(valu?["fcmtoken"])
                
             }
@@ -56,12 +57,12 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     }
     
     
-    override func viewDidDisappear(_ animated: Bool) {
-        let token = Messaging.messaging().fcmToken
-        rootRef = Database.database().reference()
-        let gameName = rootRef.child("Games\(token!)")
-        gameName.setValue(nil)
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        let token = Messaging.messaging().fcmToken
+//        rootRef = Database.database().reference()
+//        let gameName = rootRef.child("Games\(token!)")
+//        gameName.setValue(nil)
+//    }
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
@@ -92,7 +93,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         let playerid = player.child("playerId")
         let playername = player.child("name")
         let playersign = player.child("Sign")
-        var newplayer = Player(playerName!,.circle)
+        let newplayer = Player(playerName!,.circle)
         
         
         //MARK : setting values
@@ -105,11 +106,16 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         if otherDevicesTokens.count > 0 {
             //otherDevicesTokens.first
             if token != otherDevicesTokens.first!  {
-                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "Yor are connected tonew player")
+                if var name = otherPlayer.first??.name {
+                }
+                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "You are connected to new player ")
             }
         }
         //print(rootRef.key)
     }
+    
+    
+    
     func postReqest(from _: String? ,to: String??,title : String, message: String)
     {
          let manager = AFHTTPSessionManager(baseURL: baseURL)
@@ -127,11 +133,12 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         parameters["notification"] = notification
         
         _ = manager.post("https://fcm.googleapis.com/fcm/send", parameters: parameters, success: { (_, response) in
-            print(response)
+            print(response!)
         }) { (task, error) in
             print(error)
         }
         print("notifi")
+        
     }
     
 
