@@ -17,17 +17,17 @@ class ServerData {
     var rootRef: DatabaseReference
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
+    var token : String?
     
     //MARK : Constructor
     init(){
         self.rootRef = Database.database().reference()
+        token = Messaging.messaging().fcmToken
     }
     
     
     //MARK: Action
-    private func registerUser(Name name : String){
-        let token = Messaging.messaging().fcmToken
-        
+    func registerUser(Name name : String){
         // MARK : Accessing json child
         let gameName = rootRef.child("Games\(token!)")
         let gameId = gameName.child("GameId")
@@ -38,9 +38,9 @@ class ServerData {
         let playersign = player.child("Sign")
         let newplayer = Player(name,.circle)
         
-        
+        let gameid = UUID().uuidString
         //MARK : setting values
-        gameId.setValue("1")
+        gameId.setValue(gameid)
         fcmTocken.setValue(token)
         playerid.setValue(newplayer.id)
         playername.setValue(newplayer.name)
@@ -49,9 +49,39 @@ class ServerData {
     
     func getUserData() -> UserData {
         
+        rootRef.observe(.value, with: { snapshot in
+            print("key is ",snapshot.key)
+            print("value is ",snapshot.value!)
+            let value = snapshot.value as? NSDictionary
+            let fcm = value?["fcmtoken"] as? String ?? ""
+            print("fcm is ",fcm)
+            for item in snapshot.children {
+                print("key is ",(item as! DataSnapshot).key)
+                print("value is ",(item as! DataSnapshot).value!)
+                let valu = (item as! DataSnapshot).value as? NSDictionary
+                if let fcm = valu?["fcmtoken"] {
+                    print(fcm)
+                    if fcm as! String == self.token! {
+                      //  self.isthere = true
+                    }
+                }
+                self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
+                self.otherPlayer.append(valu?["player"] as? Player)
+                //   print(valu?["fcmtoken"])
+                
+            }
+        })
+        
         return UserData()
     }
+    
+    func shouldInsertData() -> Bool {
+        
+        getUserData()
+        return otherDevicesTokens.count == 0
+    }
 }
+
 
 struct UserData {
     var fcmtoken : String?

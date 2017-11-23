@@ -88,37 +88,44 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         // MARK : Properties
         let playerName = nameField.text
-        let token = Messaging.messaging().fcmToken
-        rootRef = Database.database().reference()
-        ref = Database.database().reference(withPath : "Games")
         
-        
-        // MARK : Accessing json child
-        let gameName = rootRef.child("Games\(token!)")
-        let gameId = gameName.child("GameId")
-        let fcmTocken = gameName.child("fcmtoken")
-        let player = gameName.child("player")
-        let playerid = player.child("playerId")
-        let playername = player.child("name")
-        let playersign = player.child("Sign")
-        let newplayer = Player(playerName!,.circle)
-        
-        
-        //MARK : setting values
-        gameId.setValue("1")
-        fcmTocken.setValue(token)
-        playerid.setValue(newplayer.id)
-        playername.setValue(newplayer.name)
-        playersign.setValue(String(describing: newplayer.sign))
-        
-        if otherDevicesTokens.count > 0 {
-            //otherDevicesTokens.first
-            if token != otherDevicesTokens.first!  {
-                if var name = otherPlayer.first??.name {
-                }
-                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "You are connected to new player ")
-            }
+        if ((serverData?.getUserData()) == nil) {
+            serverData?.registerUser(Name: playerName!)
         }
+//        // MARK : Properties
+//        let playerName = nameField.text
+//        let token = Messaging.messaging().fcmToken
+//        rootRef = Database.database().reference()
+//        ref = Database.database().reference(withPath : "Games")
+//
+//
+//        // MARK : Accessing json child
+//        let gameName = rootRef.child("Games\(token!)")
+//        let gameId = gameName.child("GameId")
+//        let fcmTocken = gameName.child("fcmtoken")
+//        let player = gameName.child("player")
+//        let playerid = player.child("playerId")
+//        let playername = player.child("name")
+//        let playersign = player.child("Sign")
+//        let newplayer = Player(playerName!,.circle)
+//
+//
+//        //MARK : setting values
+//        gameId.setValue("1")
+//        fcmTocken.setValue(token)
+//        playerid.setValue(newplayer.id)
+//        playername.setValue(newplayer.name)
+//        playersign.setValue(String(describing: newplayer.sign))
+
+        
+//        if otherDevicesTokens.count > 0 {
+//            //otherDevicesTokens.first
+//            if token != otherDevicesTokens.first!  {
+//                if var name = otherPlayer.first??.name {
+//                }
+//                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "You are connected to new player ")
+//            }
+//        }
         //print(rootRef.key)
     }
     
