@@ -19,50 +19,96 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     // MARK : Declairing database variables
     var ref: DatabaseReference!
     var rootRef: DatabaseReference!
+    var isthere = false
+    var otherDevicesTokens : [String?] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         let token = Messaging.messaging().fcmToken
         self.nameField.delegate = self
-        ref = Database.database().reference(withPath : "Games")
+        
+        ref = Database.database().reference()
         ref.observe(.value, with: { snapshot in
             print("key is ",snapshot.key)
-            print(snapshot.value)
+            print("value is ",snapshot.value)
+            let value = snapshot.value as? NSDictionary
+            let fcm = value?["fcmtoken"] as? String ?? ""
+            print("fcm is ",fcm)
             for item in snapshot.children {
                 print("key is ",(item as! DataSnapshot).key)
-                print((item as! DataSnapshot).value)
+                print("value is ",(item as! DataSnapshot).value)
+                let valu = (item as! DataSnapshot).value as? NSDictionary
+                if let fcm = valu?["fcmtoken"] {
+                    print(fcm)
+                    if fcm as! String == token! {
+                        self.isthere = true
+                    }
+                } else{
+                    self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
+                }
+             //   print(valu?["fcmtoken"])
+               
             }
         })
+        
     }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        let token = Messaging.messaging().fcmToken
+        rootRef = Database.database().reference()
+        let gameName = rootRef.child("Games\(token!)")
+        gameName.setValue(nil)
+    }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         self.view.endEditing(true)
         return false
     }
+    
+    
     func dismissKeyboard() {
-        
         view.endEditing(true)
     }
 
+    
     @IBAction func submitAction(_ sender: UIButton) {
-        var playerName = nameField.text
-        let token = Messaging.messaging().fcmToken
         
+        // MARK : Properties
+        let playerName = nameField.text
+        let token = Messaging.messaging().fcmToken
+        rootRef = Database.database().reference()
         ref = Database.database().reference(withPath : "Games")
-        let gameId = ref.child("GameId")
-        let fcmTocken = ref.child("fcmtoken")
-        let player = ref.child("player")
+        
+        
+        // MARK : Accessing json child
+        let gameName = rootRef.child("Games\(token!)")
+        let gameId = gameName.child("GameId")
+        let fcmTocken = gameName.child("fcmtoken")
+        let player = gameName.child("player")
         let playerid = player.child("playerId")
         let playername = player.child("name")
         let playersign = player.child("Sign")
         var newplayer = Player(playerName!,.circle)
+        
+        
+        //MARK : setting values
         gameId.setValue("1")
         fcmTocken.setValue(token)
         playerid.setValue(newplayer.id)
         playername.setValue(newplayer.name)
         playersign.setValue(String(describing: newplayer.sign))
+        
+        if otherDevicesTokens.count > 0 {
+            //otherDevicesTokens.first
+            postReqest(from: token, to: otherDevicesTokens.first)
+        }
         //print(rootRef.key)
     }
-    func postReqest()
+    func postReqest(from _: String? ,to : String??)
     {
          let manager = AFHTTPSessionManager(baseURL: baseURL)
         manager.responseSerializer = AFJSONResponseSerializer()
@@ -71,8 +117,8 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         manager.requestSerializer.setValue("key=AAAAEi3zdu4:APA91bEcVVZW1HGnqLzaiBOFnJqOOYpGyZJQP-kTa0z17V-y0vpI_YlKpJIvzJEXbR4fjipb-tc1Velu9DaKP21Y2DXd57FkwK528odOetUn3rT2oRRaCloEmhrvO4ciVtTm4CQWHaxk", forHTTPHeaderField: "Authorization")
         
         let parameters = NSMutableDictionary()
-        parameters["to"] = "cqtdI7BObw8:APA91bGIaJJ6ruMh5yffpjSFqs2M3aIrqY8aFc2-Q7xjHG5QGLmDqyl4ujieQq93PD2zqA1k2Dw03AFhVZgOo3Bj7ls4lV1EhzF9iqss-tg9QHBJozsDiC6T8MHNZqmInaPN9eAISOzE"
-        
+      //  parameters["to"] = "cqtdI7BObw8:APA91bGIaJJ6ruMh5yffpjSFqs2M3aIrqY8aFc2-Q7xjHG5QGLmDqyl4ujieQq93PD2zqA1k2Dw03AFhVZgOo3Bj7ls4lV1EhzF9iqss-tg9QHBJozsDiC6T8MHNZqmInaPN9eAISOzE"
+        parameters["to"] = to!!
         let notification = NSMutableDictionary()
         notification["body"] = "This is an FCM notification message!"
         notification["title"] = "Test Title"
@@ -83,11 +129,12 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         }) { (task, error) in
             print(error)
         }
+        print("notifi")
     }
     
 
     @IBAction func online(_ sender: UIButton) {
-       postReqest()
+       //postReqest()
 //        let token = Messaging.messaging().fcmToken
 //        print("firebase token ",token)
 //        rootRef = Database.database().reference()
