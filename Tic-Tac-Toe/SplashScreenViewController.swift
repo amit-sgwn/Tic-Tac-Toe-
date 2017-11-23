@@ -45,9 +45,9 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
                     if fcm as! String == token! {
                         self.isthere = true
                     }
-                } else{
-                    self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
                 }
+                self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
+                
              //   print(valu?["fcmtoken"])
                
             }
@@ -104,11 +104,13 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         if otherDevicesTokens.count > 0 {
             //otherDevicesTokens.first
-            postReqest(from: token, to: otherDevicesTokens.first)
+            if token != otherDevicesTokens.first!  {
+                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "Yor are connected tonew player")
+            }
         }
         //print(rootRef.key)
     }
-    func postReqest(from _: String? ,to : String??)
+    func postReqest(from _: String? ,to: String??,title : String, message: String)
     {
          let manager = AFHTTPSessionManager(baseURL: baseURL)
         manager.responseSerializer = AFJSONResponseSerializer()
@@ -120,8 +122,8 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
       //  parameters["to"] = "cqtdI7BObw8:APA91bGIaJJ6ruMh5yffpjSFqs2M3aIrqY8aFc2-Q7xjHG5QGLmDqyl4ujieQq93PD2zqA1k2Dw03AFhVZgOo3Bj7ls4lV1EhzF9iqss-tg9QHBJozsDiC6T8MHNZqmInaPN9eAISOzE"
         parameters["to"] = to!!
         let notification = NSMutableDictionary()
-        notification["body"] = "This is an FCM notification message!"
-        notification["title"] = "Test Title"
+        notification["body"] = message
+        notification["title"] = title
         parameters["notification"] = notification
         
         _ = manager.post("https://fcm.googleapis.com/fcm/send", parameters: parameters, success: { (_, response) in
