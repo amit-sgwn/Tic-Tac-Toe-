@@ -18,11 +18,13 @@ class ServerData {
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
     var token : String?
+   
     
     //MARK : Constructor
     init(){
         self.rootRef = Database.database().reference()
         token = Messaging.messaging().fcmToken
+        
     }
     
     
@@ -49,6 +51,7 @@ class ServerData {
     
     func getUserData() -> UserData {
         
+        var newGame = UserData()
         rootRef.observe(.value, with: { snapshot in
             print("key is ",snapshot.key)
             print("value is ",snapshot.value!)
@@ -68,21 +71,29 @@ class ServerData {
                 self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
                 self.otherPlayer.append(valu?["player"] as? Player)
                 //   print(valu?["fcmtoken"])
-                
+                newGame.fcmtoken = valu?["fcmtoken"] as? String
+                newGame.gameid = valu?["GameId"] as? String
+                newGame.player = valu?["player"] as? Player
             }
         })
         
-        return UserData()
+        return newGame
     }
     
     func shouldInsertData() -> Bool {
         
-        getUserData()
-        return otherDevicesTokens.count == 0
-    }
+        var shouldIinsert = false
+        rootRef.observe(.value, with: { snapshot in
+            shouldIinsert = !snapshot.exists()
+            print("value is    ...",shouldIinsert)
+           // print(shouldIinsert)
+        })
+        
+        print("return value ",shouldIinsert)
+        return shouldIinsert
 }
 
-
+}
 struct UserData {
     var fcmtoken : String?
     var gameid : String?

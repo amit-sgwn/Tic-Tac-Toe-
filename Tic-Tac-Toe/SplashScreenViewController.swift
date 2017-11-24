@@ -33,6 +33,12 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         serverData = getServerData()
         
+        if serverData!.shouldInsertData() == false  {
+            //serverData!.registerUser(Name: <#T##String#>)
+            var userData = serverData!.getUserData()
+            
+        }
+        
         ref = Database.database().reference()
         ref.observe(.value, with: { snapshot in
             print("key is ",snapshot.key)
@@ -88,10 +94,15 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         // MARK : Properties
         let playerName = nameField.text
-        
-        if ((serverData?.getUserData()) == nil) {
+        //print(serverData!.shouldInsertData())
+        if (serverData!.shouldInsertData()) {
             serverData?.registerUser(Name: playerName!)
+            var data = serverData?.getUserData()
+            print("fcm token is ",data?.fcmtoken)
+            print("game id",data?.gameid)
+            print("palyer name is " ,data?.player?.name," id is ",data?.player?.id)
         }
+   
 //        // MARK : Properties
 //        let playerName = nameField.text
 //        let token = Messaging.messaging().fcmToken
