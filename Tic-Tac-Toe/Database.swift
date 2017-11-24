@@ -18,7 +18,6 @@ class ServerData {
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
     var token : String?
-    var shouldIadd : Bool?
     
     //MARK : Constructor
     init(){
@@ -84,13 +83,10 @@ class ServerData {
         
         rootRef.observe(.value, with: { snapshot in
             let shouldIinsert = !snapshot.exists()
-            print("value is    ...",shouldIinsert)
-           // print(shouldIinsert)
-            self.shouldIadd = !snapshot.exists()
-            print("return value ",shouldIinsert)
             completion(shouldIinsert)
         })
-}
+        
+    }
 
 }
 struct UserData {
