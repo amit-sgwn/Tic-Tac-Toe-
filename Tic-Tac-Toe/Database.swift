@@ -18,7 +18,7 @@ class ServerData {
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
     var token : String?
-   
+    var shouldIadd : Bool?
     
     //MARK : Constructor
     init(){
@@ -80,17 +80,16 @@ class ServerData {
         return newGame
     }
     
-    func shouldInsertData() -> Bool {
+    func shouldInsertData(completion: @escaping ((Bool) -> Void))  {
         
-        var shouldIinsert = false
         rootRef.observe(.value, with: { snapshot in
-            shouldIinsert = !snapshot.exists()
+            let shouldIinsert = !snapshot.exists()
             print("value is    ...",shouldIinsert)
            // print(shouldIinsert)
+            self.shouldIadd = !snapshot.exists()
+            print("return value ",shouldIinsert)
+            completion(shouldIinsert)
         })
-        
-        print("return value ",shouldIinsert)
-        return shouldIinsert
 }
 
 }
