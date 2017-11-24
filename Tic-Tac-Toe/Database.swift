@@ -82,11 +82,13 @@ class ServerData {
     func shouldInsertData(completion: @escaping ((Bool) -> Void))  {
         
         rootRef.observe(.value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
             let shouldIinsert = !snapshot.exists()
+            print("value is    ...",shouldIinsert)
+            print("return value ",shouldIinsert)
             completion(shouldIinsert)
         })
-        
-    }
+}
 
 }
 struct UserData {

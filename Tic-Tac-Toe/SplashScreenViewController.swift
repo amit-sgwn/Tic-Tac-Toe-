@@ -96,48 +96,27 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         let playerName = nameField.text
         //print(serverData!.shouldInsertData())
         
+        var existingToken : Bool?
         serverData?.shouldInsertData(completion: { (shouldInsert) in
             if shouldInsert
             {
                 self.serverData?.registerUser(Name: playerName!)
-                var data = self.self.serverData?.getUserData()
-                print("fcm token is ",data?.fcmtoken)
-                print("game id",data?.gameid)
-                print("palyer name is " ,data?.player?.name," id is ",data?.player?.id)
+//                var data = self.self.serverData?.getUserData()
+//                print("fcm token is ",data?.fcmtoken)
+//                print("game id",data?.gameid)
+//                print("palyer name is " ,data?.player?.name," id is ",data?.player?.id)
             }
         })
         
-        
-        
-        
-        
-   
-//        // MARK : Properties
-//        let playerName = nameField.text
-//        let token = Messaging.messaging().fcmToken
-//        rootRef = Database.database().reference()
-//        ref = Database.database().reference(withPath : "Games")
+//        var existingUser: UserData = (serverData?.getUserData())!
 //
-//
-//        // MARK : Accessing json child
-//        let gameName = rootRef.child("Games\(token!)")
-//        let gameId = gameName.child("GameId")
-//        let fcmTocken = gameName.child("fcmtoken")
-//        let player = gameName.child("player")
-//        let playerid = player.child("playerId")
-//        let playername = player.child("name")
-//        let playersign = player.child("Sign")
-//        let newplayer = Player(playerName!,.circle)
-//
-//
-//        //MARK : setting values
-//        gameId.setValue("1")
-//        fcmTocken.setValue(token)
-//        playerid.setValue(newplayer.id)
-//        playername.setValue(newplayer.name)
-//        playersign.setValue(String(describing: newplayer.sign))
-
+//        if existingUser.fcmtoken != serverData?.getMyFcmToken()! {
+//            print("new user ")
+//            print(existingUser.fcmtoken)
+//            print("serverData?.getMyFcmToken()!")
+//        }
         
+            
 //        if otherDevicesTokens.count > 0 {
 //            //otherDevicesTokens.first
 //            if token != otherDevicesTokens.first!  {
