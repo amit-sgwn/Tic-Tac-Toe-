@@ -101,31 +101,15 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
             if shouldInsert
             {
                 self.serverData?.registerUser(Name: playerName!)
-//                var data = self.self.serverData?.getUserData()
-//                print("fcm token is ",data?.fcmtoken)
-//                print("game id",data?.gameid)
-//                print("palyer name is " ,data?.player?.name," id is ",data?.player?.id)
             }
         })
         
-//        var existingUser: UserData = (serverData?.getUserData())!
-//
-//        if existingUser.fcmtoken != serverData?.getMyFcmToken()! {
-//            print("new user ")
-//            print(existingUser.fcmtoken)
-//            print("serverData?.getMyFcmToken()!")
-//        }
+        serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
+            print(" in fcmtoken retrived is ",fcmtoken)
+            print(" in gameid retrived is ",gameid)
+            print(" in player retrived is : ",player)
+        })
         
-            
-//        if otherDevicesTokens.count > 0 {
-//            //otherDevicesTokens.first
-//            if token != otherDevicesTokens.first!  {
-//                if var name = otherPlayer.first??.name {
-//                }
-//                postReqest(from: token, to: otherDevicesTokens.first , title: "StartGame" , message: "You are connected to new player ")
-//            }
-//        }
-        //print(rootRef.key)
     }
     
     

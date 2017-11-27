@@ -143,6 +143,12 @@ class Player
         self.sign = sign
 
     }
+    
+    var isEmpty: Bool {
+        get {
+            return self.name == nil && self.sign == nil
+        }
+    }
 }
 
 struct Move

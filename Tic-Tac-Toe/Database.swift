@@ -48,36 +48,38 @@ class ServerData {
         playersign.setValue(String(describing: newplayer.sign))
     }
     
-    func getUserData() -> UserData {
+    func getUserData(completion: @escaping ((String?,String?,Player?) -> Void))  {
         
-        var newGame = UserData()
+  //      var newGame = UserData()
+        var fcmtoken : String?
+        var gameid : String?
+        var player : Player?
         rootRef.observe(.value, with: { snapshot in
-            print("key is ",snapshot.key)
-            print("value is ",snapshot.value!)
-            let value = snapshot.value as? NSDictionary
-            let fcm = value?["fcmtoken"] as? String ?? ""
-            print("fcm is ",fcm)
             for item in snapshot.children {
-                print("key is ",(item as! DataSnapshot).key)
-                print("value is ",(item as! DataSnapshot).value!)
                 let valu = (item as! DataSnapshot).value as? NSDictionary
                 if let fcm = valu?["fcmtoken"] {
                     print(fcm)
                     if fcm as! String == self.token! {
-                      //  self.isthere = true
+                        fcmtoken = fcm as! String
                     }
                 }
-                self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
-                self.otherPlayer.append(valu?["player"] as? Player)
-                //   print(valu?["fcmtoken"])
-                newGame.fcmtoken = valu?["fcmtoken"] as? String
-                newGame.gameid = valu?["GameId"] as? String
-                newGame.player = valu?["player"] as? Player
+                gameid = valu?["GameId"] as? String
+                fcmtoken = valu?["fcmtoken"] as? String
+                player = valu?["player"] as? Player
+                
+                if (fcmtoken?.isEmpty)! && (gameid?.isEmpty)! && (player?.isEmpty)! {
+                    return completion(nil, nil,nil)
+                } else {
+                    completion(fcmtoken,gameid,player)
+                }
+                
+                print("fcmtoken retrived is ",fcmtoken)
+                print("gameid retrived is ",gameid)
+                print("player retrived is : ",player)
             }
         })
-        
-        return newGame
     }
+    
     
     func shouldInsertData(completion: @escaping ((Bool) -> Void))  {
         
