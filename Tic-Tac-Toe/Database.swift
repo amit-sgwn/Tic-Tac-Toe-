@@ -73,9 +73,9 @@ class ServerData {
                     completion(fcmtoken,gameid,player)
                 }
                 
-                print("fcmtoken retrived is ",fcmtoken)
-                print("gameid retrived is ",gameid)
-                print("player retrived is : ",player)
+                print("fcmtoken retrived is ",fcmtoken ?? <#default value#>)
+                print("gameid retrived is ",gameid ?? <#default value#>)
+                print("player retrived is : ",player ?? <#default value#>)
             }
         })
     }

@@ -14,7 +14,7 @@ import FirebaseDatabase
 class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     
     @IBOutlet weak var nameField: UITextField!
-    let baseURL = URL(string: "https://fcm.googleapis.com")!
+    let baseURL = URL(string: BASE_URL)!
     
     // MARK : Declairing database variables
     var ref: DatabaseReference!
@@ -33,12 +33,6 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
         serverData = getServerData()
         
-//        if serverData!.shouldInsertData() == false  {
-//            //serverData!.registerUser(Name: <#T##String#>)
-//            var userData = serverData!.getUserData()
-//
-//        }
-//
         ref = Database.database().reference()
         ref.observe(.value, with: { snapshot in
             print("key is ",snapshot.key)
