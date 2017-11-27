@@ -51,9 +51,9 @@ class ServerData {
     func getUserData(completion: @escaping ((String?,String?,Player?) -> Void))  {
         
   //      var newGame = UserData()
-        var fcmtoken : String?
-        var gameid : String?
-        var player : Player?
+        var fcmtoken : String!
+        var gameid : String!
+        var player : Player!
         rootRef.observe(.value, with: { snapshot in
             for item in snapshot.children {
                 let valu = (item as! DataSnapshot).value as? NSDictionary
@@ -73,9 +73,9 @@ class ServerData {
                     completion(fcmtoken,gameid,player)
                 }
                 
-                print("fcmtoken retrived is ",fcmtoken ?? <#default value#>)
-                print("gameid retrived is ",gameid ?? <#default value#>)
-                print("player retrived is : ",player ?? <#default value#>)
+                print("fcmtoken retrived is ",fcmtoken)
+                print("gameid retrived is ",gameid )
+                print("player retrived is : ",player )
             }
         })
     }

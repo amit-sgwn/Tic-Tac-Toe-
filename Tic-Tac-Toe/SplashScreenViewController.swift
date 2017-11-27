@@ -57,6 +57,20 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
             }
         })
         
+        serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
+            if fcmtoken == nil {
+               print("no user online")
+            } else if fcmtoken! == (self.serverData?.token)! {
+                print("you are there")
+            } else {
+                print("fcm from server ",fcmtoken!)
+                print("my fcm ",(self.serverData?.token)!)
+                print("other user is there with fcmtoken ",fcmtoken)
+            }
+            print("Inside did view load")
+        })
+        
+        
     }
     
     
@@ -95,14 +109,24 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
             if shouldInsert
             {
                 self.serverData?.registerUser(Name: playerName!)
+            } else {
+                existingToken = true
             }
         })
         
-        serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
-            print(" in fcmtoken retrived is ",fcmtoken)
-            print(" in gameid retrived is ",gameid)
-            print(" in player retrived is : ",player)
+        if existingToken! { serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
+            if fcmtoken == nil {
+                print("no user online")
+            } else if fcmtoken! == (self.serverData?.token)! {
+                print("you are there")
+            } else {
+                print("fcm ofrom server ",fcmtoken!)
+                print("my fcm ",(self.serverData?.token)!)
+                print("other user is there with fcmtoken ",fcmtoken)
+                
+            }
         })
+        }
         
     }
     
