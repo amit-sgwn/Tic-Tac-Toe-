@@ -60,7 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        
+    
+       
         // Print full message.
         print(userInfo)
     }
@@ -73,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         // Messaging.messaging().appDidReceiveMessage(userInfo)
-        
+        NotificationCenter.default.post(name: NSNotification.Name("pushNotificationReceived"), object: nil, userInfo: userInfo)
         // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")

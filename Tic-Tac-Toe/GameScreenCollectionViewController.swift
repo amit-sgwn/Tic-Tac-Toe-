@@ -21,7 +21,12 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+    //    NotificationCenter.default.addObserver(self, selector: Selector(("handleEventNotification")), name: NSNotification.Name(rawValue: "EventNotification"), object: nil)
+     //   NotificationCenter.default.addObserver(<#T##observer: Any##Any#>, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
+        
+//        NotificationCenter.default.addObserver(Any, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.remoteNotificationReceived(notification:)), name: Notification.Name("pushNotificationReceived"), object: nil)
         print(game.type)
         self.game.type = .online
         print("game id viewdidload",game.id)
@@ -35,6 +40,12 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
             startGame()
         }
         
+    }
+    
+    
+    @objc func remoteNotificationReceived(notification: NSNotification)
+    {
+        print("notificvation recieved is jkfhgdkjghjd@@@@@ ",notification)
     }
     
     
