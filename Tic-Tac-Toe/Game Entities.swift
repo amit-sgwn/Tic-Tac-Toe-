@@ -144,6 +144,12 @@ class Player
 
     }
     
+    init(from dict: NSDictionary)
+    {
+        name = dict["name"] as! String
+        sign = dict["Sign"] as? String == "Circle" ? .circle : .cross
+    }
+    
     var isEmpty: Bool {
         get {
             return self.name == nil && self.sign == nil

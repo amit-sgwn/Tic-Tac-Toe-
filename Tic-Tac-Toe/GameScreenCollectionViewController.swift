@@ -14,7 +14,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
 {
     @IBOutlet weak var gameGridView: UICollectionView!
     var game: Game = Game()
-    
+    var notificationObject = FireBaseNotification()
     
     //making game type online for testing purpose
     var serverdata : ServerData?
@@ -26,6 +26,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
 //            fatalError("Game object not provided")
 //        }
         print(game.type)
+        self.game.type = .online
         print("game id viewdidload",game.id)
         print("game type viewdidload " ,game.type)
         let gridLayout = gameGridView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -33,6 +34,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         gridLayout.itemSize.height = gridLayout.itemSize.width
         
         if game.type == .online {
+            print("calling start game")
             startGame()
         }
         
@@ -125,7 +127,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     func startGame(){
         serverdata = getServerData()
         serverdata!.getUserData(completion: { (fcmtoken,gameid,player) in
-            if fcmtoken! == nil {
+            if fcmtoken == nil {
                 print("no user online")
             } else if fcmtoken! == (self.serverdata!.token)! {
                 print("you are there")
@@ -135,7 +137,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
                 print("other user is there with fcmtoken ",fcmtoken!)
                 print(player?.sign as Any)
                 var gameobject = GameInfo(game: self.game,player: player!,fcmtoken: self.serverdata!.token!)
-                
+                self.notificationObject.postReqest(from: self.serverdata!.token!, to: fcmtoken!, title: "Hello", message: "Notification")
             }
         })
     }

@@ -51,9 +51,9 @@ class ServerData {
     func getUserData(completion: @escaping ((String?,String?,Player?) -> Void))  {
         
   //      var newGame = UserData()
-        var fcmtoken : String!
-        var gameid : String!
-        var player : Player!
+        var fcmtoken : String?
+        var gameid : String?
+        var player : Player?
         rootRef.observe(.value, with: { snapshot in
             for item in snapshot.children {
                 let valu = (item as! DataSnapshot).value as? NSDictionary
@@ -65,17 +65,16 @@ class ServerData {
                 }
                 gameid = valu?["GameId"] as? String
                 fcmtoken = valu?["fcmtoken"] as? String
-                player = valu?["player"] as? Player
-                
+                player = Player(from: valu?["player"] as! NSDictionary)
                 if (fcmtoken?.isEmpty)! && (gameid?.isEmpty)! && (player?.isEmpty)! {
                     return completion(nil, nil,nil)
                 } else {
                     completion(fcmtoken,gameid,player)
                 }
                 
-                print("fcmtoken retrived is ",fcmtoken)
-                print("gameid retrived is ",gameid )
-                print("player retrived is : ",player )
+                print("fcmtoken retrived is ",fcmtoken!)
+                print("gameid retrived is ",gameid! )
+                print("player retrived is : ",player! )
             }
         })
     }
