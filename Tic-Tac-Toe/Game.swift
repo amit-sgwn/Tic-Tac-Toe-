@@ -11,6 +11,7 @@ import Foundation
 class Game
 {
     let id: UUID
+    var type : Type
     let size = 3*3
     private(set) var state: GameState
     var history: [Move] = []
@@ -19,6 +20,7 @@ class Game
     {
         self.id = id
         state = GameState()
+        self.type = .offline
     }
     
     @discardableResult
@@ -52,5 +54,26 @@ class Game
     {
         state = GameState()
         history = []
+    }
+}
+
+enum Type {
+    case online,offline
+    
+    mutating func setMode(type : Type)
+    {
+       self = type
+    }
+    
+    var description: String
+    {
+        if self == .offline
+        {
+            return "Offline"
+        }
+        else
+        {
+            return "Online"
+        }
     }
 }

@@ -15,7 +15,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     var window: UIWindow?
-   // var gcmMessageIDKey = "gcm.message_id"
+    var gcmMessageIDKey = "gcm.message_id"
     var notificationDelegate = NotificationDelegate()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -54,15 +54,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // TODO: Handle data of notification
         
         // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
+         Messaging.messaging().appDidReceiveMessage(userInfo)
         
-        // Print message ID.
-      //  if let messageID = userInfo[gcmMessageIDKey] {
-        //    print("Message ID: \(messageID)")
-        //}
+      //  Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
         
         // Print full message.
-      //  print(userInfo)
+        print(userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],

@@ -14,7 +14,10 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
 {
     @IBOutlet weak var gameGridView: UICollectionView!
     var game: Game = Game()
-
+    
+    
+    //making game type online for testing purpose
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -22,11 +25,16 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
 //        {
 //            fatalError("Game object not provided")
 //        }
-        
+        print(game.type)
+        print("game id viewdidload",game.id)
+        print("game type viewdidload " ,game.type)
         let gridLayout = gameGridView.collectionViewLayout as! UICollectionViewFlowLayout
         gridLayout.itemSize.width = (view.frame.width - 4)/3
         gridLayout.itemSize.height = gridLayout.itemSize.width
+        
     }
+    
+    
     
     private func getGamePosition(from indexPath: IndexPath) -> (row: Int, column: Int)
     {

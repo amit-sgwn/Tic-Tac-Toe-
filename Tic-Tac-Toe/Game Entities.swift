@@ -156,3 +156,16 @@ struct Move
     let sign: Sign
     let position: (row: Int, column: Int)
 }
+
+
+class GameInfo {
+    var game : Game
+    var player : Player    // since  we will send this instance to other player so we don't need other player's info
+    var fcmtoken : String
+    
+    init(game:Game,player:Player,fcmtoken:String){
+        self.fcmtoken = fcmtoken
+        self.game = game
+        self.player = player
+    }
+}

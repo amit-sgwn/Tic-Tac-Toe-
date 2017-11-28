@@ -19,7 +19,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     // MARK : Declairing database variables
     var ref: DatabaseReference!
     var rootRef: DatabaseReference!
-    var isthere = false
+    var type : Type = .offline
     var otherDevicesTokens : [String?] = []
     var otherPlayer : [Player?] = []
     var serverData : ServerData?
@@ -47,7 +47,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
                 if let fcm = valu?["fcmtoken"] {
                     print(fcm)
                     if fcm as! String == token! {
-                        self.isthere = true
+                       
                     }
                 }
                 self.otherDevicesTokens.append(valu?["fcmtoken"] as? String)
@@ -86,7 +86,6 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
 //        gameName.setValue(nil)
 //    }
     
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         self.view.endEditing(true)
         return false
@@ -115,12 +114,12 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         })
         
         if existingToken! { serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
-            if fcmtoken == nil {
+            if fcmtoken! == nil {
                 print("no user online")
             } else if fcmtoken! == (self.serverData?.token)! {
                 print("you are there")
             } else {
-                print("fcm ofrom server ",fcmtoken!)
+                print("fcm from server ",fcmtoken!)
                 print("my fcm ",(self.serverData?.token)!)
                 print("other user is there with fcmtoken ",fcmtoken)
                 
@@ -157,25 +156,27 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         
     }
     
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "Gameclass"
+        {
+            let DestViewController = segue.destination as! GameScreenCollectionViewController
+            DestViewController.game = Game()
+            DestViewController.game.type = self.type
+            print("game id ",DestViewController.game.id)
+            print("game type " ,DestViewController.game.type)
+            print("game type in splash ",type)
+        }
+    }
 
     @IBAction func online(_ sender: UIButton) {
-       //postReqest()
-//        let token = Messaging.messaging().fcmToken
-//        print("firebase token ",token)
-//        rootRef = Database.database().reference()
-//        ref = Database.database().reference(withPath : "Games")
-//        let gameId = ref.child("GameId")
-//        let fcmTocken = ref.child("fcmtoken")
-//        let player = ref.child("player")
-//        let playerid = player.child("playerId")
-//        let playername = player.child("name")
-//        gameId.setValue("1")
-//        fcmTocken.setValue("jdkjskjfhjkdfhkdhkfjhkhjfhkd")
-//        playerid.setValue("jskjf")
-//        playername.setValue("Amit")
-//        //print(rootRef.key)
-//       // self.ref.child("player").child(user.uid).setValue(["username": username])
-//        print(ref.key)
+        type = .online
+        print("inside onlinre type is ",type)
+    }
+    
+    
+    func startGame(){
+        
     }
     
 }
