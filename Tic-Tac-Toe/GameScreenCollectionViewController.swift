@@ -15,16 +15,14 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     @IBOutlet weak var gameGridView: UICollectionView!
     var game: Game = Game()
     var notificationObject = FireBaseNotification()
-    
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     //making game type online for testing purpose
     var serverdata : ServerData?
+    
+    //MARK:Action
     override func viewDidLoad()
     {
         super.viewDidLoad()
-    //    NotificationCenter.default.addObserver(self, selector: Selector(("handleEventNotification")), name: NSNotification.Name(rawValue: "EventNotification"), object: nil)
-     //   NotificationCenter.default.addObserver(<#T##observer: Any##Any#>, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
-        
-//        NotificationCenter.default.addObserver(Any, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.remoteNotificationReceived(notification:)), name: Notification.Name("pushNotificationReceived"), object: nil)
         print(game.type)
@@ -35,6 +33,10 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         gridLayout.itemSize.width = (view.frame.width - 4)/3
         gridLayout.itemSize.height = gridLayout.itemSize.width
         
+        activityIndicator.center = CGPoint(x: gameGridView.bounds.size.width/2, y: gameGridView.bounds.size.height/2)
+        activityIndicator.color = UIColor.yellow
+        activityIndicator.color = UIColor.black
+        gameGridView.addSubview(activityIndicator)
         if game.type == .online {
             print("calling start game")
             startGame()
@@ -46,6 +48,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     @objc func remoteNotificationReceived(notification: NSNotification)
     {
         print("notificvation recieved is jkfhgdkjghjd@@@@@ ",notification)
+        activityIndicator.stopAnimating()
     }
     
     
@@ -102,6 +105,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     {
         let position = getGamePosition(from: indexPath)
         let move = game.makeMoveOn(row: position.row, column: position.column)
+        activityIndicator.startAnimating()
         if move != nil
         {
             gameGridView.reloadItems(at: [indexPath])

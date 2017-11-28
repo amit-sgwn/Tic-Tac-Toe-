@@ -16,6 +16,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var nameField: UITextField!
     let baseURL = URL(string: BASE_URL)!
     
+
     // MARK : Declairing database variables
     var ref: DatabaseReference!
     var rootRef: DatabaseReference!
@@ -27,6 +28,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    
         
         let token = Messaging.messaging().fcmToken
         self.nameField.delegate = self
