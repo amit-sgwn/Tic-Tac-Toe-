@@ -17,7 +17,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     
     
     //making game type online for testing purpose
-    
+    var serverdata : ServerData?
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -31,6 +31,10 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         let gridLayout = gameGridView.collectionViewLayout as! UICollectionViewFlowLayout
         gridLayout.itemSize.width = (view.frame.width - 4)/3
         gridLayout.itemSize.height = gridLayout.itemSize.width
+        
+        if game.type == .online {
+            startGame()
+        }
         
     }
     
@@ -116,6 +120,15 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func startGame(){
+        serverdata = getServerData()
+        
+    }
+    
+    func getServerData() -> ServerData{
+        return ServerData()
     }
 }
 
