@@ -21,10 +21,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     override func viewDidLoad()
     {
         super.viewDidLoad()
-//        guard game != nil else
-//        {
-//            fatalError("Game object not provided")
-//        }
+
         print(game.type)
         self.game.type = .online
         print("game id viewdidload",game.id)
@@ -145,7 +142,6 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     func getServerData() -> ServerData{
         return ServerData()
     }
-    
 
 }
 

@@ -85,7 +85,6 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
 //        let gameName = rootRef.child("Games\(token!)")
 //        gameName.setValue(nil)
 //    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         self.view.endEditing(true)
         return false
@@ -103,7 +102,7 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
         let playerName = nameField.text
         //print(serverData!.shouldInsertData())
         
-        var existingToken : Bool?
+        var existingToken : Bool!
         serverData?.shouldInsertData(completion: { (shouldInsert) in
             if shouldInsert
             {
@@ -114,33 +113,19 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
                 print("we are here in else")
                 existingToken = true
                 self.serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
-                    if fcmtoken! == nil {
+                    if fcmtoken == nil {
                         print("no user online")
                     } else if fcmtoken! == (self.serverData?.token)! {
                         print("you are there")
                     } else {
                         print("fcm from server ",fcmtoken!)
                         print("my fcm ",(self.serverData?.token)!)
-                        print("other user is there with fcmtoken ",fcmtoken)
+                        print("other user is there with fcmtoken ",fcmtoken!)
                         
                     }
                 })
             }
         })
-        
-//        if existingToken! { serverData?.getUserData(completion: { (fcmtoken,gameid,player) in
-//            if fcmtoken! == nil {
-//                print("no user online")
-//            } else if fcmtoken! == (self.serverData?.token)! {
-//                print("you are there")
-//            } else {
-//                print("fcm from server ",fcmtoken!)
-//                print("my fcm ",(self.serverData?.token)!)
-//                print("other user is there with fcmtoken ",fcmtoken)
-//
-//            }
-//        })
-//        }
         
     }
     
@@ -187,11 +172,6 @@ class SplashScreenViewController: UIViewController ,UITextFieldDelegate{
     @IBAction func online(_ sender: UIButton) {
         type = .online
         print("inside onlinre type is ",type)
-    }
-    
-    
-    func startGame(){
-        
     }
     
 }
