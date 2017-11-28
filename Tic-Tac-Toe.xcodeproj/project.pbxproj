@@ -14,6 +14,7 @@
 		288A32791FBDBA620076BFD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 288A32781FBDBA620076BFD7 /* Assets.xcassets */; };
 		288A327C1FBDBA620076BFD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 288A327A1FBDBA620076BFD7 /* LaunchScreen.storyboard */; };
 		28920AC11FCBEA4F00F9393D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28920AC01FCBEA4F00F9393D /* Constants.swift */; };
+		28920AC31FCD379000F9393D /* FireBaseNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28920AC21FCD379000F9393D /* FireBaseNotification.swift */; };
 		2896E8AC1FBE9FDC007C36DD /* GameScreenCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2896E8AB1FBE9FDC007C36DD /* GameScreenCollectionViewController.swift */; };
 		2896E8AE1FBEA7A6007C36DD /* GameButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2896E8AD1FBEA7A6007C36DD /* GameButtonCell.swift */; };
 		2896E8B21FBEE83D007C36DD /* Game Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2896E8B11FBEE83D007C36DD /* Game Entities.swift */; };
@@ -35,6 +36,7 @@
 		288A327B1FBDBA620076BFD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		288A327D1FBDBA620076BFD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28920AC01FCBEA4F00F9393D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		28920AC21FCD379000F9393D /* FireBaseNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseNotification.swift; sourceTree = "<group>"; };
 		2896E8AB1FBE9FDC007C36DD /* GameScreenCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreenCollectionViewController.swift; sourceTree = "<group>"; };
 		2896E8AD1FBEA7A6007C36DD /* GameButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButtonCell.swift; sourceTree = "<group>"; };
 		2896E8B11FBEE83D007C36DD /* Game Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game Entities.swift"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				288A32711FBDBA610076BFD7 /* AppDelegate.swift */,
 				28FA90DE1FC3EF2200B718BA /* NotificationDelegate.swift */,
 				2896E8AB1FBE9FDC007C36DD /* GameScreenCollectionViewController.swift */,
+				28920AC21FCD379000F9393D /* FireBaseNotification.swift */,
 				280B53331FC29B4B00A17367 /* SplashScreenViewController.swift */,
 				28FBCDEE1FC6EF2D00CB72BA /* Database.swift */,
 				28FBCDEB1FC5483700CB72BA /* GameListTableViewController.swift */,
@@ -288,6 +291,7 @@
 				28920AC11FCBEA4F00F9393D /* Constants.swift in Sources */,
 				28FA90DF1FC3EF2200B718BA /* NotificationDelegate.swift in Sources */,
 				28FBCDEF1FC6EF2D00CB72BA /* Database.swift in Sources */,
+				28920AC31FCD379000F9393D /* FireBaseNotification.swift in Sources */,
 				288A32721FBDBA610076BFD7 /* AppDelegate.swift in Sources */,
 				2896E8AE1FBEA7A6007C36DD /* GameButtonCell.swift in Sources */,
 			);

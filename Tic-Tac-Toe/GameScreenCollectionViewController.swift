@@ -124,12 +124,27 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     
     func startGame(){
         serverdata = getServerData()
-        
+        serverdata!.getUserData(completion: { (fcmtoken,gameid,player) in
+            if fcmtoken! == nil {
+                print("no user online")
+            } else if fcmtoken! == (self.serverdata!.token)! {
+                print("you are there")
+            } else {
+                print("fcm from server ",fcmtoken!)
+                print("my fcm ",(self.serverdata!.token)!)
+                print("other user is there with fcmtoken ",fcmtoken!)
+                print(player?.sign as Any)
+                var gameobject = GameInfo(game: self.game,player: player!,fcmtoken: self.serverdata!.token!)
+                
+            }
+        })
     }
     
     func getServerData() -> ServerData{
         return ServerData()
     }
+    
+
 }
 
 
