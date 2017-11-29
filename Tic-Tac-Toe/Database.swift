@@ -89,7 +89,30 @@ class ServerData {
             print("return value ",shouldIinsert)
             completion(shouldIinsert)
         })
-}
+    }
+    
+    
+    func getOpponentFcmToken(completion: @escaping ((String?) -> Void))  {
+        var fcmtoken : String?
+        
+        rootRef.observe(.value, with: { snapshot in
+            for item in snapshot.children {
+                let valu = (item as! DataSnapshot).value as? NSDictionary
+                if let fcm = valu?["fcmtoken"] {
+                    print(fcm)
+                    if fcm as! String == self.token! {
+                        fcmtoken = fcm as! String
+                    }
+                }
+                fcmtoken = valu?["fcmtoken"] as? String
+                if (fcmtoken?.isEmpty)! {
+                    return completion(nil)
+                } else {
+                    completion(fcmtoken)
+                }
+            }
+        })
+    }
 
 }
 struct UserData {

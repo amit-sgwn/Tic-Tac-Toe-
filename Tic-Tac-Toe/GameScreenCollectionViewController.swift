@@ -19,6 +19,7 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     //making game type online for testing purpose
     var serverdata : ServerData?
     
+
     //MARK:Action
     override func viewDidLoad()
     {
