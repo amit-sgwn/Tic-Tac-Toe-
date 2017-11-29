@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 private let reuseIdentifier = "Cell"
 
@@ -19,6 +20,10 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     //making game type online for testing purpose
     var serverdata : ServerData?
     
+    var hostToken : String?
+    var opponent : String?
+    
+    var notifyopponent : FireBaseNotification = FireBaseNotification()
 
     //MARK:Action
     override func viewDidLoad()
@@ -30,9 +35,18 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         self.game.type = .online
         print("game id viewdidload",game.id)
         print("game type viewdidload " ,game.type)
+        
+        
         let gridLayout = gameGridView.collectionViewLayout as! UICollectionViewFlowLayout
         gridLayout.itemSize.width = (view.frame.width - 4)/3
         gridLayout.itemSize.height = gridLayout.itemSize.width
+        
+        serverdata = getServerData()
+        
+        hostToken = (serverdata?.token)!
+        serverdata?.getOpponentFcmToken(completion: { fcmtoken in
+            self.opponent = fcmtoken!
+        })
         
         activityIndicator.center = CGPoint(x: gameGridView.bounds.size.width/2, y: gameGridView.bounds.size.height/2)
         activityIndicator.color = UIColor.yellow
@@ -50,6 +64,8 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
     {
         print("notificvation recieved is jkfhgdkjghjd@@@@@ ",notification)
         activityIndicator.stopAnimating()
+        print(notification)
+        
     }
     
     
@@ -109,6 +125,8 @@ class GameScreenCollectionViewController: UIViewController, UICollectionViewData
         activityIndicator.startAnimating()
         if move != nil
         {
+            print("host ",hostToken!,"opponent ",opponent!)
+            notificationObject.moveRequestPush(from: hostToken!, to: opponent!, row: position.row, column: position.column)
             gameGridView.reloadItems(at: [indexPath])
             if let winningSign = game.state.getWinner()
             {
